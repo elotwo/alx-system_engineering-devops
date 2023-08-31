@@ -1,2 +1,4 @@
 absolute path 
-display list 
+display list
+changing to home
+list in long format
