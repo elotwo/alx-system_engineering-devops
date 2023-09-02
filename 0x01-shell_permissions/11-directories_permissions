@@ -1,2 +1,2 @@
 #!/bin/bash
-mkdir -m +x -p 
+mkdir -m +x -p pwd
