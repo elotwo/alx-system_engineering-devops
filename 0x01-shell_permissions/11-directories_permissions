@@ -1,2 +1,2 @@
 #!/bin/bash
-mkdir -m 755 -p .
+mkdir -m +x -p .
