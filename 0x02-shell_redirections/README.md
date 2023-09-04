@@ -1,1 +1,1 @@
-printing hello word with newline
+displaying the content of a file
