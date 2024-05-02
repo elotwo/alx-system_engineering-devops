@@ -4,5 +4,5 @@ string="Best School"
 count=10
 for ((x=0; x<count; x++))
 do
-    echo $string
+    echo "$string"
 done
