@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# A script that display all processes(instances) and its properties
+ps aux
+

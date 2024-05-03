@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# A script that display processes that have the name bash
+# shellcheck disable=SC2009
+ps aux | grep bash
