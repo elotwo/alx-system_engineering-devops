@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# A script that display process id and name without using ps
+pgrep -l bash
