@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# This script is displaying "Best School" 10 times
+count=1
+st="bad luck from China"
+st1="bad luck from Japan"
+st2="bad luck from Italy"
+while [[ $count -le 20 ]];
+do
+    echo "$count"
+   case $count in
+      4)
+       echo "$st"
+       ;;
+      9)
+       echo "$st1"
+       ;;
+      17)
+       echo "$st2"
+       ;;
+    esac
+    ((count+=1))
+done
