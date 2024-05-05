@@ -5,14 +5,21 @@
 hour=0
 minute=1
 
-echo "Time:"
+while [ $hour -le 12 ];do
+	if [ $hour == 0 ]; then
+	echo "Hour: $hour"
+else
+    minute=1
+    while [ $minute -le 60 ]; do
+	if [ $minute -eq 60 ]; then
+	  echo "Hour: $hour"
+	else
+          echo "$minute"
+	fi
 
-while [ $hour -le 12 ]; do
-    while [ $minute -le 59 ]; do
-        printf "%02d:%02d\n" $hour $minute
         ((minute++))
     done
+	fi
     ((hour++))
-    minute=1
 done
 
