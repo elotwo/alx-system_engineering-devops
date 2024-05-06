@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+#Testing if a file exits and is not empty
+var="school"
+if test -a "$var"; then
+	echo "school file exists"
+else
+	echo "school file does not exist"
+	exit 1
+fi
+if test -f "$var"; then
+	echo "school is a regular file"
+fi
+if test -s "$var"; then
+	echo "school file is not empty"
+else
+	echo "school file is empty"
+fi
