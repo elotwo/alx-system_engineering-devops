@@ -1,7 +1,14 @@
 #!/usr/bin/env bash
-#
-i=0
-while [ [ $i -le 100 ] ]; do
- echo "$i"
-  if ((i%3)) -o ((i%5)); then
+# A shell script that display iteration of numbers from 1 to 100 checking for multyple of 3 and 5. 
+i=1
+while [ $i -le 100 ]; do
 
+  if ((i%3 == 0)); then
+	  echo "Fizz"
+  elif ((i%5 == 0)); then
+	  echo "Buzz"
+  else
+	  echo "$i"
+  fi
+   ((i++))
+done
