@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
-#
+# A script that display still infinity
 var="To infinity and beyond"
-for
+while true; do
+	echo "$var"
+	sleep 2
+ done
