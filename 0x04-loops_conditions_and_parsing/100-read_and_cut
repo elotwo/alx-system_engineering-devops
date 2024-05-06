@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-
-# Read each line of /etc/passwd
-while IFS=: read -r username _ uid _ home _; do
-    # Print username, user id, and home directory path
-    echo ": $username"
-    echo "$uid"
-    echo "$home"
-    echo
-done < /etc/passwd
+#
+userinfo="$(whoami)"
+userinfo+="$(id -u)"
+userinfo+="$(echo "$PATH")"
+i=0
+while [ $i -le 1 ]; do
+	echo "$userinfo"
+	((i++))
+done
 
