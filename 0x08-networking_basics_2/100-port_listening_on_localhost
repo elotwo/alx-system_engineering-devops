@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
-#
+# A script that listen a port on localhost
 netcat -lp 98
