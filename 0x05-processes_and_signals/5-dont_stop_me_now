@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 #
-pid=$(pgrep "4-to_infinity_and_beyond")
+pid=$(pidof "4-to_infinity_and_beyond")
 kill "$pid"
