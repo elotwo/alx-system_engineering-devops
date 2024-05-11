@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
 # this script is to display IPV4
 ifconfig | grep -oP '\d+\.\d+\.\d+\.\d+'
-
