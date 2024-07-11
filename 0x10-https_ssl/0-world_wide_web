@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+www|A|54.157.187.124
+lb-01|A|54.157.187.124
+web-01|A|18.210.33.116
+web-02|A|52.201.25.125
+domain=$1
+subdomain=$2
+function create_do($domain, $subdomain){
+if [ [$domain] && [-z $subdomain ] ]
+then
+
