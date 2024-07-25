@@ -1,4 +1,3 @@
-ubuntu@481601-web-01:~$ sudo cat /etc/ufw/before.rules
 #
 # rules.before
 #
