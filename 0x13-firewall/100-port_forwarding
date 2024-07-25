@@ -1,0 +1,18 @@
+ubuntu@481601-web-01:~$ sudo cat /etc/ufw/before.rules
+#
+# rules.before
+#
+# Rules that should be run before the ufw command line added rules. Custom
+# rules should be added to one of these chains:
+#   ufw-before-input
+#   ufw-before-output
+#   ufw-before-forward
+#
+*nat
+:PREROUTING ACCEPT [0:0]
+
+#Redirect port 8080 to port 80
+-A PREROUTING -p tcp --dport 8080 -j REDIRECT --to-port 80
+
+COMMIT
+
