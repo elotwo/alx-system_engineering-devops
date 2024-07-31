@@ -15,7 +15,7 @@ def fetch(employee_id):
         sys.exit(1)
 
     user_data = user_response.json()
-    employee_name = user_data.get('name')
+    EMPLOYEE_NAME = user_data.get('name')
     todos_url =
     f'https://jsonplaceholder.typicode.com/users/{employee_id}/todos'
     todos_response = requests.get(todos_url)
@@ -25,11 +25,11 @@ def fetch(employee_id):
         sys.exit(1)
 
     todos = todos_response.json()
-    total_tasks = len(todos) if todos else 0
-    done_tasks = [todo for todo in todos if todo.get('completed')]
+    TOTAL_NUMBER_OF_TASKS = len(todos) if todos else 0
+    NUMBER_OF_DONE_TASKS = [todo for todo in todos if todo.get('completed')]
     print(
-            f"Employee {employee_name} is done with tasks("
-            f"{len(done_tasks)}/{total_tasks}):"
+            f"Employee {EMPLOYEE_NAME} is done with tasks("
+            f"{len(NUMBER_OF_DONE_TASKS)}/{TOTAL_NUMBER_OF_TASKS}):"
     )
     for task in done_tasks:
         print(f"\t {task.get('title')}")
