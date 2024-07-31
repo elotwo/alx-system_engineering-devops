@@ -2,8 +2,8 @@
 """
 this script is about retriving data from API end point
 """
-import requests
 import sys
+import requests
 
 
 def fetch(employee_id):
