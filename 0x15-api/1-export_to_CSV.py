@@ -16,23 +16,26 @@ def fetch(employee_id):
         sys.exit(1)
 
     user_data = user_response.json()
-    USER_ID = user_data.get('id')
+    user_id = user_data.get('id')
+    username = user_data.get('username')
     todos_url = f'https://jsonplaceholder.typicode.com/users/{employee_id}/todos'
     todos_response = requests.get(todos_url)
 
     if todos_response.status_code != 200:
-        print("Failed to retrieve TODO data")
-        sys.exit(1)
+         print("Failed to retrieve TODO data")
+         sys.exit(1)
 
     todos = todos_response.json()
-    TOTAL_NUMBER_OF_TASKS = len(todos) if todos else 0
-    NUMBER_OF_DONE_TASKS = [todo for todo in todos if todo.get('completed')]
-    print(
-            f"Employee {EMPLOYEE_NAME} is done with tasks("
-            f"{len(NUMBER_OF_DONE_TASKS)}/{TOTAL_NUMBER_OF_TASKS}):"
-    )
-    for task in NUMBER_OF_DONE_TASKS:
-        print(f"\t {task.get('title')}")
+    csv_filename = f'{user_id}.csv'                         
+    with open('USER_ID.csv', 'w', newline='', encoding='utf-8' ) as file:
+        writer = csv.writer(file, quoting=csv.QUOTE_ALL)
+
+        for todo in todos:
+            task_completed_status = todo.get('completed')
+            task_title = todo.get('title')
+            writer.writerow([user_id, username, str(task_completed_status), task_title])
+
+    print(f"Data successfully written to {csv_filename}")
 
 
 if __name__ == "__main__":
