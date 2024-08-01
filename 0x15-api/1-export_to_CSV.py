@@ -18,22 +18,28 @@ def fetch(employee_id):
     user_data = user_response.json()
     user_id = user_data.get('id')
     username = user_data.get('username')
-    todos_url = f'https://jsonplaceholder.typicode.com/users/{employee_id}/todos'
+    todos_url = f'https://jsonplaceholder.typicode.com/users/'
+    f'{employee_id}/todos'
     todos_response = requests.get(todos_url)
 
     if todos_response.status_code != 200:
-         print("Failed to retrieve TODO data")
-         sys.exit(1)
+        print("Failed to retrieve TODO data")
+        sys.exit(1)
 
     todos = todos_response.json()
-    csv_filename = f'{user_id}.csv'                         
-    with open('USER_ID.csv', 'w', newline='', encoding='utf-8' ) as file:
+    csv_filename = f'{user_id}.csv'
+    with open('USER_ID.csv', 'w', newline='', encoding='utf-8') as file:
         writer = csv.writer(file, quoting=csv.QUOTE_ALL)
 
         for todo in todos:
             task_completed_status = todo.get('completed')
             task_title = todo.get('title')
-            writer.writerow([user_id, username, str(task_completed_status), task_title])
+            writer.writerow([
+                user_id,
+                username,
+                str(task_completed_status),
+                task_title
+            ])
 
     print(f"Data successfully written to {csv_filename}")
 
