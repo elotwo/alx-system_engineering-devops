@@ -16,8 +16,7 @@ def fetch(employee_id):
 
     user_data = user_response.json()
     EMPLOYEE_NAME = user_data.get('name')
-    todos_url =
-    f'https://jsonplaceholder.typicode.com/users/{employee_id}/todos'
+    todos_url = f'https://jsonplaceholder.typicode.com/users/{employee_id}/todos'
     todos_response = requests.get(todos_url)
 
     if todos_response.status_code != 200:
@@ -31,7 +30,7 @@ def fetch(employee_id):
             f"Employee {EMPLOYEE_NAME} is done with tasks("
             f"{len(NUMBER_OF_DONE_TASKS)}/{TOTAL_NUMBER_OF_TASKS}):"
     )
-    for task in done_tasks:
+    for task in NUMBER_OF_DONE_TASKS:
         print(f"\t {task.get('title')}")
 
 
