@@ -16,8 +16,9 @@ def fetch(employee_id):
 
     user_data = user_response.json()
     EMPLOYEE_NAME = user_data.get('name')
-    todos_url = f'https://jsonplaceholder'
-    f'.typicode.com/users/{employee_id}/todos'
+    todos_url = (
+           f'https://jsonplaceholder.typicode.com/users/{employee_id}/todos'
+            )
     todos_response = requests.get(todos_url)
 
     if todos_response.status_code != 200:
