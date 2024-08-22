@@ -1,18 +1,18 @@
 package {'nginx':
-ensure => installed,
+ensure  => installed,
 }
 service {'nginx':
-ensure => running,
-enable => true,
+ensure  => running,
+enable  => true,
 require => Package['nginx'],
 }
 file{'/etc/nginx/sites-available/default':
-ensure => file,
-content => template('/etc/nginx/default.conf.erb'),
+ensure  => file,
+content => template('/etc/nginx/sites-available/default'),
 require => Package['nginx'],
 }
 nginx::resource::site{'default':
-ensure =>present,
+ensure  => present,
 require => File['/etc/nginx/sites-available/default'],
 }
 exec {'reload-nginx':
