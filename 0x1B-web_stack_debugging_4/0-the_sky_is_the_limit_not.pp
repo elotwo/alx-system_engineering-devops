@@ -4,23 +4,18 @@ ensure => installed,
 service {'nginx':
 ensure => running,
 enable => true,
-subscribe => File['/etc/nginx/sites-enabled/2-app_server-nginx_config'],
+require => Package['nginx'],
 }
-service {'flask_app':
-ensure => running,
-enable => true,
-subscribe => File['/path/to/your/flask/app/config/file'],
+file{'/etc/nginx/sites-available/default':
+ensure => file,
+content => template('/etc/nginx/default.conf.erb'),
+require => Package['nginx'],
 }
-file { '/etc/nginx/sites-enabled/2-app_server-nginx_config':
-  ensure  => file,
-  require => Service['nginx'],
-  notify  => Service['nginx'],
+nginx::resource::site{'default':
+ensure =>present,
+require => File['/etc/nginx/sites-available/default'],
 }
-file { '/path/to/your/flask/app/config/file':
-  ensure  => file,
-  notify  => Service['flask_app'],
-}
-file { '/etc/nginx/nginx.conf':
-  ensure  => file,
-  notify  => Service['nginx'],
+exec {'reload-nginx':
+command => '/usr/sbin/nginx -s reload',
+require => Nginx::Resource::Site['default'],
 }
