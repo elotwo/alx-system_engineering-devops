@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+scp /home/emmanuel/alx-system_engineering-devops/0x0C-web_server/some_page.html ubuntu@18.210.33.116:/home/user/
+echo  "Usage: 0-transfer_file PATH_TO_FILE IP USERNAME PATH_TO_SSH_KEY"
