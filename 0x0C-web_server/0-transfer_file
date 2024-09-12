@@ -1,3 +1,15 @@
 #!/usr/bin/env bash
-scp /home/emmanuel/alx-system_engineering-devops/0x0C-web_server/some_page.html ubuntu@18.210.33.116:/home/user/
-echo  "Usage: 0-transfer_file PATH_TO_FILE IP USERNAME PATH_TO_SSH_KEY"
+if [ "$#" -lt 4 ]; then
+	  echo "Usage: $0 PATH_TO_FILE IP USERNAME PATH_TO_SSH_KEY"
+	    exit 1
+fi
+PATH_TO_FILE=$1
+SERVER_IP=$2
+USERNAME=$3
+SSH_KEY=$4
+if scp -i "$SSH_KEY" -o StrictHostKeyChecking=no "$PATH_TO_FILE" "$USERNAME@$SERVER_IP:~/"; then
+	echo "File transferred successfully to $USERNAME@$SERVER_IP:~/"
+else
+	echo "File transfer failed."
+	exit 1
+fi
