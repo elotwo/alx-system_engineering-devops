@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# this script install nginx in web server 481601-web-01
+sudo apt update
+sudo apt install -y nginx
+sudo service nginx start
+echo "Hello World!" | sudo tee /var/www/html/index.htmlx
+response=$(curl -s http://localhost)
+if [[ "$response" == *"Hello World!"* ]]; then
+  echo "Nginx is successfully serving 'Hello World!' on port 80"
+else
+  echo "Failed to configure Nginx to serve 'Hello World!'"
+  exit 1
+fi
