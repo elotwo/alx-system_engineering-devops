@@ -3,11 +3,22 @@
 sudo apt update
 sudo apt install -y nginx
 sudo service nginx start
-echo "Hello World!" | sudo tee /var/www/html/index.htmlx
+sudo mkdir -p /var/www/htmlx
+sudo chown -R www-data:www-data /var/www/htmlx/index.html
+sudo chmod -R 755 /var/www/htmlx/index.html
+echo "Hello World!" | sudo tee /var/www/htmlx/index.html
+new_root='root /var/www/htmlx'
+new_index='index index.html;'
+file='/etc/nginx/sites-available/default'
+sudo sed -i "s|^\s*root\s*/var/www/html;|$new_root;|g" $file
+sudo sed -i "s|^\s*index\s*index.html index.htm index.nginx-debian.html;|$new_index|g" $file
+sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo service nginx restart
 response=$(curl -s http://localhost)
 if [[ "$response" == *"Hello World!"* ]]; then
-  echo "Nginx is successfully serving 'Hello World!' on port 80"
+	echo "Nginx is successfully serving 'Hello World!' on port 80"
 else
-  echo "Failed to configure Nginx to serve 'Hello World!'"
-  exit 1
+	echo "Failed to configure Nginx to serve 'Hello World!'"
+	exit 1
 fi
