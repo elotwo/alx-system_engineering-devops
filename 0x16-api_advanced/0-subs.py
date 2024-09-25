@@ -3,6 +3,9 @@ import requests
 
 
 def number_of_subscribers(subreddit):
+    """
+    for record
+    """
     if subreddit is None or not isinstance(subreddit, str):
         return 0
     headers = {'User-Agent': 'my-reddit-subscriber-counter/0.1'}
