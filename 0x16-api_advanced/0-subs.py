@@ -17,8 +17,6 @@ def number_of_subscribers(subreddit):
             data = response.json().get('data', {})
             return data.get('subscribers', 0)
         else:
-            print("ok")
             return 0
     except requests.exceptions.RequestException:
-        print ("0k")
         return 0
