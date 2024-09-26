@@ -1,11 +1,9 @@
-# This Puppet manifest installs and configures Apache to serve a web page correctly.
-
 # Ensure apache2 package is installed
 package { 'apache2':
   ensure => installed,
 }
 
-# Ensure that the required directory exists under /var/www/html
+# Ensure the /var/www/html directory has the correct ownership and permissions
 file { '/var/www/html':
   ensure  => 'directory',
   owner   => 'www-data',
@@ -14,10 +12,10 @@ file { '/var/www/html':
   require => Package['apache2'],
 }
 
-# Ensure that an index.html file exists and contains the correct content
+# Ensure that an index.html file exists with correct content and permissions
 file { '/var/www/html/index.html':
   ensure  => present,
-  content => '<html>Hello</html>',  # Adjust content to match the expected length (12 chars)
+  content => '<html>Hello</html>',
   owner   => 'www-data',
   group   => 'www-data',
   mode    => '0644',
@@ -31,11 +29,11 @@ service { 'apache2':
   require => Package['apache2'],
 }
 
-# Ensure proper ownership and permissions of the web root
+# Ensure correct permissions of the web root
 exec { 'fix-apache-permissions':
-  command => 'chown www-data:www-data /var/www/html/ -R && chmod 755 /var/www/html/ -R',
+  command => 'chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html',
   path    => ['/bin', '/usr/bin'],
   onlyif  => 'find /var/www/html/ ! -user www-data',
-  require => [File['/var/www/html/index.html'], Package['apache2']],
+  require => File['/var/www/html/index.html'],
 }
 
