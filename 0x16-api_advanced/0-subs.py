@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""
+Reddit API: subscriber counter
+"""
 import requests
 
 
