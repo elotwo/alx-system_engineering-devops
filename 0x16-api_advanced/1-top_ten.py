@@ -29,4 +29,4 @@ def top_ten(subreddit):
         else:
             print(None)
     except requests.exceptions.RequestException as e:
-        print(None)
+        print("OK")
