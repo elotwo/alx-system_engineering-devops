@@ -1,9 +1,9 @@
-# Ensure Apache, MySQL, and PHP are installed
-package { ['apache2', 'mysql-server', 'php', 'php-mysql', 'libapache2-mod-php']:
+# Ensure apache2 package is installed
+package { 'apache2':
   ensure => installed,
 }
 
-# Create the WordPress directory
+# Ensure the /var/www/html directory has the correct ownership and permissions
 file { '/var/www/html':
   ensure  => 'directory',
   owner   => 'www-data',
@@ -12,43 +12,28 @@ file { '/var/www/html':
   require => Package['apache2'],
 }
 
-# Download and extract WordPress
-exec { 'download_wordpress':
-  command => 'wget -P /tmp https://wordpress.org/latest.tar.gz && tar -xzf /tmp/latest.tar.gz -C /tmp && mv /tmp/wordpress/* /var/www/html/',
-  path    => '/bin:/usr/bin',
-  unless  => 'test -d /var/www/html/wp-content',
-  require => File['/var/www/html'],
-}
-
-# Ensure proper ownership and permissions of the WordPress directory
-exec { 'fix-wordpress-permissions':
-  command => 'chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html',
-  path    => ['/bin', '/usr/bin'],
-  require => Exec['download_wordpress'],
-}
-
-# Create MySQL database and user for WordPress
-exec { 'setup_database':
-  command => 'mysql -u root -e "CREATE DATABASE wordpress; CREATE USER \'wpuser\'@\'localhost\' IDENTIFIED BY \'password\'; GRANT ALL PRIVILEGES ON wordpress.* TO \'wpuser\'@\'localhost\'; FLUSH PRIVILEGES;"',
-  path    => '/bin:/usr/bin',
-  unless  => 'mysql -u root -e "SHOW DATABASES;" | grep wordpress',
-  require => Package['mysql-server'],
-}
-
-# Configure wp-config.php for WordPress
-file { '/var/www/html/wp-config.php':
-  ensure  => 'file',
+# Ensure that an index.html file exists with correct content and permissions
+file { '/var/www/html/index.html':
+  ensure  => present,
+  content => '<html>Hello</html>',
   owner   => 'www-data',
   group   => 'www-data',
   mode    => '0644',
-  content => template('0x17-web_stack_debugging_3/templates/wp-config.php.erb'),  # Use a template file for dynamic content
-  require => Exec['fix-wordpress-permissions'],
+  require => File['/var/www/html'],
 }
 
-# Ensure Apache is running and enabled
+# Ensure Apache service is running and enabled
 service { 'apache2':
-  ensure => running,
-  enable => true,
+  ensure  => running,
+  enable  => true,
   require => Package['apache2'],
+}
+
+# Ensure correct permissions of the web root
+exec { 'fix-apache-permissions':
+  command => 'chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html',
+  path    => ['/bin', '/usr/bin'],
+  onlyif  => 'find /var/www/html/ ! -user www-data',
+  require => File['/var/www/html/index.html'],
 }
 
