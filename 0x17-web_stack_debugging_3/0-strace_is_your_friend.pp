@@ -1,24 +1,26 @@
+# This Puppet script fixes file permissions for Apache and ensures the Apache service is running properly.
+
 # Ensure apache2 package is installed
 package { 'apache2':
   ensure => installed,
 }
 
-# Ensure the /var/www/html directory has the correct ownership and permissions
+# Ensure the web root directory exists with correct permissions
 file { '/var/www/html':
-  ensure  => 'directory',
+  ensure  => directory,
   owner   => 'www-data',
   group   => 'www-data',
   mode    => '0755',
   require => Package['apache2'],
 }
 
-# Ensure that an index.html file exists with correct content and permissions
+# Ensure the index.html file exists and has the correct permissions
 file { '/var/www/html/index.html':
   ensure  => present,
-  content => '<html><h1>Holberton</h1></html>',
   owner   => 'www-data',
   group   => 'www-data',
   mode    => '0644',
+  content => '<html><head><title>Holberton</title></head><body>Yet another bug by a Holberton student</body></html>',
   require => File['/var/www/html'],
 }
 
@@ -26,14 +28,6 @@ file { '/var/www/html/index.html':
 service { 'apache2':
   ensure  => running,
   enable  => true,
-  require => Package['apache2'],
-}
-
-# Ensure correct permissions of the web root
-exec { 'fix-apache-permissions':
-  command => 'chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html',
-  path    => ['/bin', '/usr/bin'],
-  onlyif  => 'find /var/www/html/ ! -user www-data',
-  require => File['/var/www/html/index.html'],
+  require => [Package['apache2'], File['/var/www/html/index.html']],
 }
 
